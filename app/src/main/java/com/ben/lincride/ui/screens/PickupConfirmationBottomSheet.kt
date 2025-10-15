@@ -117,13 +117,19 @@ fun PickupConfirmationBottomSheetContent(
                 Column(horizontalAlignment = Alignment.End) {
                     Text(
                         text = formattedTime, 
-                        style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold), 
-                        color = MaterialTheme.colorScheme.onSurface
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontWeight = FontWeight.SemiBold, // 600 weight
+                            fontSize = 16.sp
+                        ), 
+                        color = Color(0xFF2A2A2A) // Figma color specification
                     )
                     Text(
                         text = "Waiting time", 
-                        style = MaterialTheme.typography.labelMedium, 
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Medium, // 500 weight
+                            fontSize = 12.sp
+                        ), 
+                        color = Color(0xFF656565) // Figma color specification
                     )
                 }
             }
@@ -251,8 +257,11 @@ private fun PassengerInfoCard(
         // "To Pick up" text above avatar
         Text(
             text = "To Pick up",
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            style = MaterialTheme.typography.labelMedium.copy(
+                fontWeight = FontWeight.Medium, // 500 weight
+                fontSize = 10.sp
+            ),
+            color = Color(0xFF2A2A2A), // Figma color specification
             modifier = Modifier.padding(bottom = 8.dp)
         )
         
@@ -271,8 +280,11 @@ private fun PassengerInfoCard(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = name, 
-                        style = MaterialTheme.typography.titleMedium, 
-                        color = MaterialTheme.colorScheme.onSurface
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.Medium, // 500 weight
+                            fontSize = 10.sp
+                        ), 
+                        color = Color(0xFF2A2A2A) // Figma color specification
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
