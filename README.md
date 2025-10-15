@@ -1,3 +1,11 @@
+
+
+https://github.com/user-attachments/assets/26c013ff-7ea2-4d5d-bbd8-ebd30886aa39
+
+
+
+
+
 # LincRide
 
 A ride-sharing app built with modern Android development practices. Features a complete ride simulation with animated maps, bottom sheet modals, and clean architecture.
