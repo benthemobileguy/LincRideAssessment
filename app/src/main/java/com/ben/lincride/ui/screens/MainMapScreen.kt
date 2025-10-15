@@ -34,10 +34,6 @@ import com.ben.lincride.domain.model.RideEvent
 import com.ben.lincride.domain.model.RideState
 import com.ben.lincride.presentation.viewmodel.RideViewModel
 
-/**
- * "Smart" composable that is aware of the ViewModel and app state.
- * Its only job is to collect state and pass it down.
- */
 @Composable
 fun MainMapScreen(
     modifier: Modifier = Modifier,
@@ -45,14 +41,12 @@ fun MainMapScreen(
 ) {
     val rideState by viewModel.rideState.collectAsState()
     
-    // Log state changes for debugging
     LaunchedEffect(rideState.currentEvent) {
         Log.i("🚗 LincRide_MainMapScreen", "📊 STATE CHANGED: ${rideState.currentEvent}")
         Log.d("🚗 LincRide_MainMapScreen", "isSimulating: ${rideState.isSimulating}")
         Log.d("🚗 LincRide_MainMapScreen", "passengers: ${rideState.passengers.size}")
     }
 
-    // Pass the state and event handlers down to the stateless UI
     MainMapScreenContent(
         modifier = modifier,
         rideState = rideState,
@@ -64,10 +58,6 @@ fun MainMapScreen(
     )
 }
 
-/**
- * "Dumb" composable that contains the actual UI.
- * It is stateless and knows nothing about ViewModels, making it easy to preview.
- */
 @Composable
 fun MainMapScreenContent(
     modifier: Modifier = Modifier,
@@ -83,7 +73,6 @@ fun MainMapScreenContent(
     Box(
         modifier = modifier.fillMaxSize()
     ) {
-        // In preview, show a placeholder. In a real app, show the actual MapScreen.
         if (LocalInspectionMode.current) {
             Box(modifier = Modifier
                 .fillMaxSize()
@@ -101,7 +90,6 @@ fun MainMapScreenContent(
             )
         }
 
-        // Show home screen UI when idle
         if (rideState.currentEvent == RideEvent.IDLE) {
             HomeScreenOverlay(
                 onOfferRide = {
@@ -114,19 +102,16 @@ fun MainMapScreenContent(
             )
         }
 
-        // Event-driven bottom sheet overlays
         when (rideState.currentEvent) {
             RideEvent.OFFER_RIDE_AVAILABLE -> {
-                // Auto-progress to next state after brief delay
                 LaunchedEffect(Unit) {
                     Log.d("🚗 LincRide_MainMapScreen", "Auto-progressing from OFFER_RIDE_AVAILABLE...")
-                    delay(1000) // Brief loading state
+                    delay(1000)
                     onProgressToNextEvent()
                 }
             }
             
             RideEvent.PASSENGERS_ACCEPTED -> {
-                // Auto-progress to pickup phase
                 LaunchedEffect(Unit) {
                     Log.d("🚗 LincRide_MainMapScreen", "Auto-progressing from PASSENGERS_ACCEPTED...")
                     delay(500)
@@ -175,16 +160,12 @@ fun MainMapScreenContent(
             }
 
             else -> {
-                // Map with home UI visible or other states
             }
         }
     }
 }
 
 
-/**
- * HomeScreenOverlay - Correctly implements the Figma design for the bottom sheet.
- */
 @Composable
 fun HomeScreenOverlay(
     onOfferRide: () -> Unit,
@@ -196,13 +177,11 @@ fun HomeScreenOverlay(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ) {
-        // Single cohesive modal with clipped rounded corners
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
         ) {
-            // Green Section - Top part of the modal
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -233,7 +212,6 @@ fun HomeScreenOverlay(
                 }
             }
 
-            // White Section - Main modal content
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -241,7 +219,6 @@ fun HomeScreenOverlay(
                     .padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Bar indicator at the top of white section
                 BarIndicator(modifier = Modifier.padding(bottom = 8.dp))
 
             Text(

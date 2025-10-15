@@ -7,6 +7,7 @@ val LincGreen = Color(0xFF00C853)        // Primary green color
 val LincGreenDark = Color(0xFF00A344)    // Darker green for states
 val LincBlue = Color(0xFF2C75FF)         // "Offer Ride" button blue (updated)
 val LincBlueDark = Color(0xFF1565C0)     // Darker blue for states
+val FocusBlue = Color(0xFF9EC0FF)        // Focus ring/border blue (Blue/200)
 
 // Status Colors
 val PickedUpGreen = Color(0xFF4CAF50)    // Right swipe green
@@ -43,3 +44,7 @@ val StopDestination = Color(0xFF2A2A2A)  // Destination circle fill
 
 // Pickup Background Color (Figma specification)
 val PickupBackground = Color(0xFFEAFFF6) // Light green background for pickup components
+
+// Trip Ended Overlay Colors (Figma specifications)
+val TripEndProgressGreen = Color(0xFF2DFFA0) // CO2 progress indicator and thumb color
+val RidersHelpedTextGreen = Color(0xFF3A711A) // "You helped X riders..." text color

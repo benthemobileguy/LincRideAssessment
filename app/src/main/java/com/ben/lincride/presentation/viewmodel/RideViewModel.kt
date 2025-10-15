@@ -12,9 +12,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-/**
- * Professional ViewModel implementing MVI pattern for ride management
- */
 @HiltViewModel
 class RideViewModel @Inject constructor(
     private val rideSimulationEngine: RideSimulationEngine

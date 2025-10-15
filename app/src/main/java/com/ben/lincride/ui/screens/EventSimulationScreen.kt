@@ -20,9 +20,6 @@ import com.ben.lincride.core.designsystem.theme.LincGreen
 import com.ben.lincride.domain.model.RideEvent
 import com.ben.lincride.presentation.viewmodel.RideViewModel
 
-/**
- * Professional event simulation screen for development and testing
- */
 @Composable
 fun EventSimulationScreen(
     modifier: Modifier = Modifier,
@@ -37,7 +34,6 @@ fun EventSimulationScreen(
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Header
         Text(
             text = "🚗 LincRide Event Simulation",
             fontSize = 24.sp,
@@ -47,15 +43,9 @@ fun EventSimulationScreen(
         
         Spacer(modifier = Modifier.height(16.dp))
         
-        Text(
-            text = "Senior Android Engineer Assessment",
-            fontSize = 14.sp,
-            color = Color.Gray
-        )
         
         Spacer(modifier = Modifier.height(32.dp))
         
-        // Current State Card
         CurrentStateCard(
             currentEvent = rideState.currentEvent,
             isSimulating = rideState.isSimulating,
@@ -65,7 +55,6 @@ fun EventSimulationScreen(
         
         Spacer(modifier = Modifier.height(24.dp))
         
-        // Control Buttons
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
@@ -111,7 +100,6 @@ fun EventSimulationScreen(
         
         Spacer(modifier = Modifier.height(24.dp))
         
-        // Event Timeline
         EventTimeline()
     }
 }

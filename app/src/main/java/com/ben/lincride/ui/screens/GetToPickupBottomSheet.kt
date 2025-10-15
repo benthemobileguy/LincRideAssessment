@@ -1,5 +1,6 @@
 package com.ben.lincride.ui.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,18 +21,16 @@ import androidx.compose.ui.unit.sp
 import com.ben.lincride.R
 import com.ben.lincride.core.designsystem.theme.LincRideTheme
 import com.ben.lincride.core.designsystem.theme.LincGreen
+import com.ben.lincride.core.designsystem.theme.LincRideColors
 import com.ben.lincride.ui.components.BottomSheetContainer
 import com.ben.lincride.ui.components.GradientProgressBarWithCar
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.foundation.border
 import com.ben.lincride.core.designsystem.theme.PickupBackground
+import com.ben.lincride.core.designsystem.theme.FocusBlue
 import kotlinx.coroutines.delay
 
-/**
- * "Smart" composable for Screen 14.1.1: Get to Pickup Bottom Sheet
- * Handles the progress simulation logic.
- */
 @Composable
 fun GetToPickupBottomSheet(
     isVisible: Boolean,
@@ -42,7 +41,6 @@ fun GetToPickupBottomSheet(
     var progress by remember { mutableStateOf(0.3f) }
     var timeRemaining by remember { mutableStateOf("4 min") }
 
-    // Simulate car progress - Event 3: Get to Pick Up
     LaunchedEffect(isVisible) {
         if (isVisible) {
             while (progress < 1.0f) {
@@ -55,7 +53,7 @@ fun GetToPickupBottomSheet(
                 timeRemaining = if (remainingTime <= 0) "Arrived" else if (remainingMinutes > 0) "$remainingMinutes min" else "${remainingSeconds}s"
             }
             if (progress >= 1.0f) {
-                delay(500) // Brief pause
+                delay(500)
                 onAnimationComplete()
             }
         }
@@ -76,9 +74,6 @@ fun GetToPickupBottomSheet(
     )
 }
 
-/**
- * "Dumb" composable that only displays the UI, making it previewable.
- */
 @Composable
 fun GetToPickupBottomSheetContent(
     modifier: Modifier = Modifier,
@@ -102,7 +97,6 @@ fun GetToPickupBottomSheetContent(
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
-            // Header with time - add margins
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -113,9 +107,8 @@ fun GetToPickupBottomSheetContent(
                 Text(
                     text = "Get to pickup...",
                     style = MaterialTheme.typography.headlineMedium,
-                    color = Color(0xFF2A2A2A)
+                    color = LincRideColors.textPrimary
                 )
-                // Blue indicator matching Figma exactly
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Box(
                         modifier = Modifier
@@ -125,7 +118,10 @@ fun GetToPickupBottomSheetContent(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = "$timeRemaining away",
-                        style = MaterialTheme.typography.labelMedium,
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Medium,
+                            fontSize = 12.sp
+                        ),
                         color = Color(0xFF9EC0FF)
                     )
                 }
@@ -133,7 +129,6 @@ fun GetToPickupBottomSheetContent(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Gradient Progress bar with car - NO MARGINS
             GradientProgressBarWithCar(
                 progress = progress,
                 modifier = Modifier.fillMaxWidth()
@@ -141,7 +136,6 @@ fun GetToPickupBottomSheetContent(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Passenger info card with blue border - reuse pattern from PickupConfirmation
             PassengerInfoCard(
                 name = passengerName,
                 rating = passengerRating,
@@ -151,7 +145,6 @@ fun GetToPickupBottomSheetContent(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Available seats row - text broken into lines as per Figma (matching PickupConfirmation)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -159,43 +152,51 @@ fun GetToPickupBottomSheetContent(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Left side: "Available" + "Seats" (broken lines)
                 Column {
                     Text(
                         text = "Available", 
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 10.sp
+                        ),
+                        color = Color(0xFF656565)
                     )
                     Text(
                         text = "Seats", 
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 10.sp
+                        ),
+                        color = Color(0xFF656565)
                     )
                 }
                 
-                // Center: Big number "2"
                 Text(
-                    text = "2", 
+                    text = availableSeats.toString(), 
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 
-                // Right side: "Passengers" + "accepted" + avatars
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column {
                         Text(
                         text = "Passengers", 
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 10.sp
+                        ),
+                        color = Color(0xFF656565)
                     )
                         Text(
-                        text = "accepted", 
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                            text = "accepted", 
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 10.sp
+                            ),
+                            color = Color(0xFF656565)
+                        )
                     }
                     Spacer(modifier = Modifier.width(8.dp))
-                    // Use actual avatar images
                     Image(
                         painter = painterResource(id = R.drawable.avatar_offer_ride),
                         contentDescription = "Avatar 1",
@@ -212,7 +213,6 @@ fun GetToPickupBottomSheetContent(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Share Ride Info button - proper spacing and margins
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -224,13 +224,14 @@ fun GetToPickupBottomSheetContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1F1F1F)),
-                    shape = RoundedCornerShape(32.dp)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White),
+                    shape = RoundedCornerShape(32.dp),
+                    border = BorderStroke(1.dp, Color(0xFF1D1D1D))
                 ) {
                     Text(
                         text = "Share Ride Info",
                         style = MaterialTheme.typography.labelLarge,
-                        color = Color(0xFFF8F8F8)
+                        color = LincRideColors.textPrimary
                     )
                 }
             }
@@ -245,13 +246,12 @@ private fun PassengerInfoCard(
     pickupLocation: String,
     modifier: Modifier = Modifier
 ) {
-    // Blue border wrapper matching Figma specs
-    Card(
+        Card(
         modifier = modifier
             .fillMaxWidth()
             .border(
-                width = 1.dp,
-                color = Color(0xFF2C75FF), // LincBlue border
+                width = 4.dp, // Focus ring 4px spread
+                color = FocusBlue, // Blue/200 #9EC0FF focus ring color
                 shape = RoundedCornerShape(12.dp)
             ),
         colors = CardDefaults.cardColors(containerColor = PickupBackground), // #EAFFF6 background
@@ -262,11 +262,13 @@ private fun PassengerInfoCard(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            // "To Pick" text above avatar
             Text(
                 text = "To Pick",
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                style = MaterialTheme.typography.labelMedium.copy(
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 10.sp
+                ),
+                color = Color(0xFF2A2A2A),
                 modifier = Modifier.padding(bottom = 8.dp)
             )
             
@@ -274,7 +276,6 @@ private fun PassengerInfoCard(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Use actual avatar image instead of text initials
                 Image(
                     painter = painterResource(id = R.drawable.avatar_profile),
                     contentDescription = "Profile Avatar",
@@ -285,15 +286,18 @@ private fun PassengerInfoCard(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
                             text = name, 
-                            style = MaterialTheme.typography.titleMedium, 
-                            color = MaterialTheme.colorScheme.onSurface
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 10.sp
+                            ), 
+                            color = Color(0xFF2A2A2A)
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Icon(
                             painter = painterResource(id = R.drawable.verify),
                             contentDescription = "Verified",
                             modifier = Modifier.size(14.dp),
-                            tint = Color.Unspecified // Preserve original SVG colors
+                            tint = Color.Unspecified
                         )
                     }
                     Spacer(modifier = Modifier.height(4.dp))
@@ -305,14 +309,15 @@ private fun PassengerInfoCard(
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
                             text = rating.toString(), 
-                            style = MaterialTheme.typography.labelMedium, 
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 10.sp
+                            ), 
+                            color = Color(0xFF656565)
                         )
                     }
                 }
-                // Chat and call icons - EACH in separate grey containers (reuse pattern)
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    // Message icon in its own container
                     Box(
                         modifier = Modifier
                             .size(36.dp)
@@ -326,7 +331,6 @@ private fun PassengerInfoCard(
                                 modifier = Modifier.size(20.dp), // Bigger and uniform
                                 tint = Color(0xFF2A2A2A)
                             )
-                            // Red notification dot
                             Box(
                                 modifier = Modifier
                                     .size(8.dp)
@@ -337,7 +341,6 @@ private fun PassengerInfoCard(
                         }
                     }
                     
-                    // Call icon in its own container
                     Box(
                         modifier = Modifier
                             .size(36.dp)
@@ -354,21 +357,18 @@ private fun PassengerInfoCard(
                 }
             }
             
-            // Grey divider above pick-up point
             Spacer(modifier = Modifier.height(16.dp))
             HorizontalDivider(
                 modifier = Modifier.padding(horizontal = 20.dp),
                 color = Color.Gray.copy(alpha = 0.3f)
             )
             
-            // Location info with circle and dotted lines - proper spacing
             Spacer(modifier = Modifier.height(16.dp))
             Row(
                 modifier = Modifier.padding(horizontal = 20.dp),
                 verticalAlignment = Alignment.Top
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    // Circle with Image #2 specs
                     Box(
                         modifier = Modifier
                             .size(14.dp)
@@ -382,7 +382,6 @@ private fun PassengerInfoCard(
                                 CircleShape
                             )
                     )
-                    // 3 vertical dotted lines
                     repeat(3) {
                         Spacer(modifier = Modifier.height(2.dp))
                         Box(
@@ -397,17 +396,22 @@ private fun PassengerInfoCard(
                 Column {
                     Text(
                         text = "Pick-up point", 
-                        style = MaterialTheme.typography.labelMedium, 
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 10.sp
+                        ), 
+                        color = Color(0xFF656565)
                     )
                     Text(
                         text = pickupLocation, 
-                        style = MaterialTheme.typography.titleMedium, 
-                        color = MaterialTheme.colorScheme.onSurface
+                        style = MaterialTheme.typography.titleMedium.copy(
+                            fontWeight = FontWeight.Medium,
+                            fontSize = 12.sp
+                        ), 
+                        color = Color(0xFF2A2A2A)
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                // Green ETA pill matching Figma
                 Card(
                     colors = CardDefaults.cardColors(
                         containerColor = Color(0xFF4CAF50)

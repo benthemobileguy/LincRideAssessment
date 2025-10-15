@@ -7,6 +7,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -50,7 +51,7 @@ data class RouteStop(
     val passengerInitials: String? = null,
     val isCompleted: Boolean = false,
     val isCurrent: Boolean = false,
-    val stopNumber: Int? = null // For Drop-off 1, Drop-off 2, etc.
+    val stopNumber: Int? = null
 )
 
 enum class StopType {
@@ -60,10 +61,6 @@ enum class StopType {
     DESTINATION
 }
 
-/**
- * "Smart" composable for Screen 14.4.1: Heading to Drop Off Bottom Sheet
- * Handles the progress simulation logic.
- */
 @Composable
 fun HeadingToDropOffBottomSheet(
     isVisible: Boolean,
@@ -73,7 +70,6 @@ fun HeadingToDropOffBottomSheet(
 ) {
     var progress by remember { mutableStateOf(0.4f) }
 
-    // Simulate journey progress
     LaunchedEffect(isVisible) {
         if (isVisible) {
             while (progress < 1.0f) {
@@ -81,7 +77,7 @@ fun HeadingToDropOffBottomSheet(
                 progress += 0.005f
             }
             if (progress >= 1.0f) {
-                delay(500) // Brief pause
+                delay(500)
                 onAnimationComplete()
             }
         }
@@ -100,9 +96,6 @@ fun HeadingToDropOffBottomSheet(
     )
 }
 
-/**
- * "Dumb" composable that only displays the UI, making it previewable.
- */
 @Composable
 fun HeadingToDropOffBottomSheetContent(
     modifier: Modifier = Modifier,
@@ -123,7 +116,6 @@ fun HeadingToDropOffBottomSheetContent(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Header with margins
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -136,26 +128,51 @@ fun HeadingToDropOffBottomSheetContent(
                     style = MaterialTheme.typography.headlineMedium,
                     color = LincRideColors.textPrimary
                 )
-                Column(horizontalAlignment = Alignment.End) {
-                    Text(
-                        text = nextStopLocation, 
-                        style = MaterialTheme.typography.labelMedium.copy(
-                            lineHeight = 18.sp, // 150% of 12sp as per Figma
-                            textAlign = TextAlign.Right
-                        ),
-                        color = Color(0xFF383838)
-                    )
-                    Text(
-                        text = "To drop off 🏠", 
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Column(horizontalAlignment = Alignment.End) {
+                        Text(
+                            text = nextStopLocation, 
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                lineHeight = 18.sp,
+                                textAlign = TextAlign.Right
+                            ),
+                            color = Color(0xFF383838)
+                        )
+                        Text(
+                            text = "To drop off", 
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    
+                    // Avatar with circle border
+                    Box(
+                        modifier = Modifier
+                            .size(32.dp)
+                            .background(Color.White, CircleShape)
+                            .border(
+                                width = 2.dp,
+                                color = Color(0xFF4CAF50),
+                                shape = CircleShape
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.avatar_profile),
+                            contentDescription = "Passenger Avatar",
+                            modifier = Modifier
+                                .size(28.dp)
+                                .clip(CircleShape)
+                        )
+                    }
                 }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Progress bar with car - full width NO MARGINS
             ProgressBarWithCar(
                 progress = progress,
                 modifier = Modifier.fillMaxWidth()
@@ -163,7 +180,6 @@ fun HeadingToDropOffBottomSheetContent(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Route visualization with margins
             RouteVisualization(
                 stops = routeStops, 
                 modifier = Modifier
@@ -173,7 +189,6 @@ fun HeadingToDropOffBottomSheetContent(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Available seats row - CONSISTENT with other modals (text broken into lines)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -181,43 +196,51 @@ fun HeadingToDropOffBottomSheetContent(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Left side: "Available" + "Seats" (broken lines)
                 Column {
                     Text(
                         text = "Available", 
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 10.sp
+                        ),
+                        color = Color(0xFF656565)
                     )
                     Text(
                         text = "Seats", 
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 10.sp
+                        ),
+                        color = Color(0xFF656565)
                     )
                 }
                 
-                // Center: Big number "1"
                 Text(
                     text = "1", 
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 
-                // Right side: "Passengers" + "accepted" + avatars (SAME ROW)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column {
                         Text(
                             text = "Passengers", 
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 10.sp
+                            ),
+                            color = Color(0xFF656565)
                         )
                         Text(
                             text = "accepted", 
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                fontWeight = FontWeight.Normal,
+                                fontSize = 10.sp
+                            ),
+                            color = Color(0xFF656565)
                         )
                     }
                     Spacer(modifier = Modifier.width(8.dp))
-                    // Use actual avatar images like other modals
                     Image(
                         painter = painterResource(id = R.drawable.avatar_offer_ride),
                         contentDescription = "Avatar 1",
@@ -234,7 +257,6 @@ fun HeadingToDropOffBottomSheetContent(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Share Ride Info button - proper spacing and margins
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -290,10 +312,8 @@ private fun RouteVisualization(
 private fun RouteStopItem(stop: RouteStop, isLast: Boolean) {
     Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Top) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            // Circle indicator based on Figma specs
             when (stop.type) {
                 StopType.STARTING_POINT -> {
-                    // White circle with border as per Figma
                     Box(
                         modifier = Modifier
                             .size(14.dp)
@@ -308,7 +328,6 @@ private fun RouteStopItem(stop: RouteStop, isLast: Boolean) {
                     }
                 }
                 StopType.DROP_OFF_1 -> {
-                    // Avatar with green border
                     stop.passengerInitials?.let { _ ->
                         Box(
                             modifier = Modifier
@@ -327,7 +346,6 @@ private fun RouteStopItem(stop: RouteStop, isLast: Boolean) {
                     }
                 }
                 StopType.DROP_OFF_2 -> {
-                    // Avatar with orange border
                     stop.passengerInitials?.let { _ ->
                         Box(
                             modifier = Modifier
@@ -346,7 +364,6 @@ private fun RouteStopItem(stop: RouteStop, isLast: Boolean) {
                     }
                 }
                 StopType.DESTINATION -> {
-                    // Solid filled circle
                     Box(
                         modifier = Modifier
                             .size(14.dp)
@@ -355,7 +372,6 @@ private fun RouteStopItem(stop: RouteStop, isLast: Boolean) {
                 }
             }
             
-            // Connecting lines based on Figma specs
             if (!isLast) {
                 val nextStop = when (stop.type) {
                     StopType.STARTING_POINT -> StopType.DROP_OFF_1
@@ -366,40 +382,36 @@ private fun RouteStopItem(stop: RouteStop, isLast: Boolean) {
                 
                 when (nextStop) {
                     StopType.DROP_OFF_1 -> {
-                        // Green dots to Drop-off 1
-                        repeat(10) { index ->
+                        repeat(3) {
+                            Spacer(modifier = Modifier.height(2.dp))
                             Box(
                                 modifier = Modifier
                                     .width(2.dp)
-                                    .height(2.dp)
-                                    .background(StopGreen, CircleShape)
+                                    .height(4.dp)
+                                    .background(StopGreen)
                             )
-                            if (index < 9) {
-                                Spacer(modifier = Modifier.height(2.dp))
-                            }
                         }
                     }
                     StopType.DROP_OFF_2 -> {
-                        // Orange lines to Drop-off 2
-                        Box(
-                            modifier = Modifier
-                                .width(2.dp)
-                                .height(20.dp)
-                                .background(StopOrange)
-                        )
+                        repeat(3) {
+                            Spacer(modifier = Modifier.height(2.dp))
+                            Box(
+                                modifier = Modifier
+                                    .width(2.dp)
+                                    .height(4.dp)
+                                    .background(StopOrange)
+                            )
+                        }
                     }
                     StopType.DESTINATION -> {
-                        // Dotted gray lines to Destination
-                        repeat(6) { index ->
+                        repeat(3) {
+                            Spacer(modifier = Modifier.height(2.dp))
                             Box(
                                 modifier = Modifier
                                     .width(2.dp)
                                     .height(4.dp)
                                     .background(StopDottedGray)
                             )
-                            if (index < 5) {
-                                Spacer(modifier = Modifier.height(2.dp))
-                            }
                         }
                     }
                     else -> {}
@@ -438,31 +450,8 @@ private fun RouteStopItem(stop: RouteStop, isLast: Boolean) {
                 color = LincRideColors.textPrimary
             )
             
-            // Route info card
-            if ((stop.type == StopType.DROP_OFF_1 || stop.type == StopType.DROP_OFF_2) && stop.passengerName != null) {
-                Spacer(modifier = Modifier.height(8.dp))
-                Card(
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFF0F8FF)),
-                    shape = RoundedCornerShape(8.dp),
-                    modifier = Modifier.wrapContentWidth()
-                ) {
-                    Text(
-                        text = "Through Aromire Str. • 4 min",
-                        style = MaterialTheme.typography.labelMedium,
-                        color = Color(0xFF2196F3),
-                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                    )
-                }
-            }
         }
         
-        if (stop.isCurrent) {
-            Text(
-                text = "4 min",
-                style = MaterialTheme.typography.labelMedium,
-                color = LincRideColors.textPrimary
-            )
-        }
     }
 }
 

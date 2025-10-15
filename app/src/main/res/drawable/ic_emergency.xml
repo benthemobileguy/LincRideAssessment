@@ -1,0 +1,15 @@
+<!--
+  ~ Emergency icon - Simple exclamation mark for emergency button
+  -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="16dp"
+    android:height="16dp"
+    android:viewportWidth="16"
+    android:viewportHeight="16">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M8,1.5C8.41,1.5 8.75,1.84 8.75,2.25L8.75,9.25C8.75,9.66 8.41,10 8,10C7.59,10 7.25,9.66 7.25,9.25L7.25,2.25C7.25,1.84 7.59,1.5 8,1.5Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M8,12C8.55,12 9,12.45 9,13C9,13.55 8.55,14 8,14C7.45,14 7,13.55 7,13C7,12.45 7.45,12 8,12Z" />
+</vector>

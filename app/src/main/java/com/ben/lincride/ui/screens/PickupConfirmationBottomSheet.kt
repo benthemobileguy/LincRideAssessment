@@ -27,15 +27,12 @@ import com.ben.lincride.R
 import com.ben.lincride.core.designsystem.theme.LincRideTheme
 import com.ben.lincride.core.designsystem.theme.LincGreen
 import com.ben.lincride.core.designsystem.theme.LincRideColors
+import com.ben.lincride.core.designsystem.theme.PickupBackground
 import com.ben.lincride.ui.components.BottomSheetContainer
 import kotlinx.coroutines.delay
 import androidx.compose.material3.MaterialTheme
 import kotlin.math.abs
 
-/**
- * "Smart" composable for Screen 14.2.1: Pickup Confirmation Bottom Sheet
- * Handles the countdown timer logic.
- */
 @Composable
 fun PickupConfirmationBottomSheet(
     isVisible: Boolean,
@@ -44,9 +41,8 @@ fun PickupConfirmationBottomSheet(
     onPickedUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var timeRemaining by remember { mutableStateOf(285) } // 04:45 in seconds
+    var timeRemaining by remember { mutableStateOf(285) }
 
-    // Countdown timer
     LaunchedEffect(isVisible) {
         if (isVisible) {
             while (timeRemaining > 0) {
@@ -67,17 +63,13 @@ fun PickupConfirmationBottomSheet(
         onDidntShow = onDidntShow,
         onPickedUp = onPickedUp,
         formattedTime = formattedTime,
-        passengerName = "Nneka Chukwu", // Correct name from Figma
-        passengerRating = 4.7f,
+        passengerName = "Nneka Chukwu",         passengerRating = 4.7f,
         pickupLocation = "Ladipo Oluwole Street",
         availableSeats = 1,
         passengersAccepted = listOf("HC", "DS")
     )
 }
 
-/**
- * "Dumb" composable that only displays the UI, making it previewable.
- */
 @Composable
 fun PickupConfirmationBottomSheetContent(
     modifier: Modifier = Modifier,
@@ -101,7 +93,6 @@ fun PickupConfirmationBottomSheetContent(
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
-            // Header with margins
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -118,25 +109,24 @@ fun PickupConfirmationBottomSheetContent(
                     Text(
                         text = formattedTime, 
                         style = MaterialTheme.typography.headlineMedium.copy(
-                            fontWeight = FontWeight.SemiBold, // 600 weight
+                            fontWeight = FontWeight.SemiBold,
                             fontSize = 16.sp
                         ), 
-                        color = Color(0xFF2A2A2A) // Figma color specification
+                        color = Color(0xFF2A2A2A)
                     )
                     Text(
                         text = "Waiting time", 
                         style = MaterialTheme.typography.labelMedium.copy(
-                            fontWeight = FontWeight.Medium, // 500 weight
+                            fontWeight = FontWeight.Medium,
                             fontSize = 12.sp
                         ), 
-                        color = Color(0xFF656565) // Figma color specification
+                        color = Color(0xFF656565)
                     )
                 }
             }
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Passenger info with margins
             PassengerInfoCard(
                 name = passengerName,
                 rating = passengerRating,
@@ -146,7 +136,6 @@ fun PickupConfirmationBottomSheetContent(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Swipeable action area - FULL WIDTH like progress bars
             SwipeableActionArea(
                 onDidntShow = onDidntShow,
                 onPickedUp = onPickedUp,
@@ -155,7 +144,6 @@ fun PickupConfirmationBottomSheetContent(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Available seats row - text broken into lines as per Figma
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -163,43 +151,51 @@ fun PickupConfirmationBottomSheetContent(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Left side: "Available" + "Seats" (broken lines)
                 Column {
                     Text(
                     text = "Available", 
-                    style = MaterialTheme.typography.labelMedium, 
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 10.sp
+                    ), 
+                    color = Color(0xFF656565)
                 )
                     Text(
                     text = "Seats", 
-                    style = MaterialTheme.typography.labelMedium, 
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 10.sp
+                    ), 
+                    color = Color(0xFF656565)
                 )
                 }
                 
-                // Center: Big number "1"
                 Text(
                     text = availableSeats.toString(), 
                     style = MaterialTheme.typography.headlineMedium, 
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 
-                // Right side: "Passengers" + "accepted" + avatars
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column {
                         Text(
                         text = "Passengers", 
-                        style = MaterialTheme.typography.labelMedium, 
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 10.sp
+                        ), 
+                        color = Color(0xFF656565)
                     )
                         Text(
                         text = "accepted", 
-                        style = MaterialTheme.typography.labelMedium, 
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Normal,
+                            fontSize = 10.sp
+                        ), 
+                        color = Color(0xFF656565)
                     )
                     }
                     Spacer(modifier = Modifier.width(8.dp))
-                    // Use actual avatar images
                     Image(
                         painter = painterResource(id = R.drawable.avatar_offer_ride),
                         contentDescription = "Avatar 1",
@@ -216,7 +212,6 @@ fun PickupConfirmationBottomSheetContent(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Share Ride Info button - proper spacing and margins
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -250,18 +245,16 @@ private fun PassengerInfoCard(
     pickupLocation: String,
     modifier: Modifier = Modifier
 ) {
-    // NO BACKGROUND as per Figma - just content
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
-        // "To Pick up" text above avatar
         Text(
             text = "To Pick up",
             style = MaterialTheme.typography.labelMedium.copy(
-                fontWeight = FontWeight.Medium, // 500 weight
+                fontWeight = FontWeight.Medium,
                 fontSize = 10.sp
             ),
-            color = Color(0xFF2A2A2A), // Figma color specification
+            color = Color(0xFF2A2A2A),
             modifier = Modifier.padding(bottom = 8.dp)
         )
         
@@ -269,7 +262,6 @@ private fun PassengerInfoCard(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Use actual avatar image instead of text initials
             Image(
                 painter = painterResource(id = R.drawable.avatar_profile),
                 contentDescription = "Profile Avatar",
@@ -281,17 +273,17 @@ private fun PassengerInfoCard(
                     Text(
                         text = name, 
                         style = MaterialTheme.typography.titleMedium.copy(
-                            fontWeight = FontWeight.Medium, // 500 weight
+                            fontWeight = FontWeight.Medium,
                             fontSize = 10.sp
                         ), 
-                        color = Color(0xFF2A2A2A) // Figma color specification
+                        color = Color(0xFF2A2A2A)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Icon(
                         painter = painterResource(id = R.drawable.verify),
                         contentDescription = "Verified",
                         modifier = Modifier.size(14.dp),
-                        tint = Color.Unspecified // Preserve original SVG colors
+                        tint = Color.Unspecified
                     )
                 }
                 Spacer(modifier = Modifier.height(4.dp))
@@ -303,14 +295,15 @@ private fun PassengerInfoCard(
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = rating.toString(), 
-                        style = MaterialTheme.typography.labelMedium, 
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Medium,
+                            fontSize = 10.sp
+                        ), 
+                        color = Color(0xFF656565)
                     )
                 }
             }
-            // Chat and call icons - EACH in separate grey containers
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                // Message icon in its own container
                 Box(
                     modifier = Modifier
                         .size(36.dp)
@@ -321,10 +314,9 @@ private fun PassengerInfoCard(
                         Icon(
                             painter = painterResource(id = R.drawable.ic_message),
                             contentDescription = "Message",
-                            modifier = Modifier.size(20.dp), // Bigger and uniform
+                            modifier = Modifier.size(20.dp),
                             tint = Color(0xFF2A2A2A)
                         )
-                        // Red notification dot
                         Box(
                             modifier = Modifier
                                 .size(8.dp)
@@ -335,7 +327,6 @@ private fun PassengerInfoCard(
                     }
                 }
                 
-                // Call icon in its own container
                 Box(
                     modifier = Modifier
                         .size(36.dp)
@@ -352,21 +343,18 @@ private fun PassengerInfoCard(
             }
         }
         
-        // Grey divider above pick-up point
         Spacer(modifier = Modifier.height(16.dp))
         HorizontalDivider(
             modifier = Modifier.padding(horizontal = 20.dp),
             color = Color.Gray.copy(alpha = 0.3f)
         )
         
-        // Location info with circle and dotted lines - proper spacing
         Spacer(modifier = Modifier.height(16.dp))
         Row(
             modifier = Modifier.padding(horizontal = 20.dp),
             verticalAlignment = Alignment.Top
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                // Circle with Image #2 specs
                 Box(
                     modifier = Modifier
                         .size(14.dp)
@@ -380,7 +368,6 @@ private fun PassengerInfoCard(
                             CircleShape
                         )
                 )
-                // 3 vertical dotted lines
                 repeat(3) {
                     Spacer(modifier = Modifier.height(2.dp))
                     Box(
@@ -395,13 +382,19 @@ private fun PassengerInfoCard(
             Column {
                 Text(
                     text = "Pick-up point", 
-                    style = MaterialTheme.typography.labelMedium, 
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    style = MaterialTheme.typography.labelMedium.copy(
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 10.sp
+                    ), 
+                    color = Color(0xFF656565)
                 )
                 Text(
                     text = pickupLocation, 
-                    style = MaterialTheme.typography.titleMedium, 
-                    color = MaterialTheme.colorScheme.onSurface
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 12.sp
+                    ), 
+                    color = Color(0xFF2A2A2A)
                 )
             }
         }
@@ -425,11 +418,10 @@ private fun SwipeableActionArea(
             .background(
                 brush = Brush.horizontalGradient(
                     colors = listOf(
-                        Color(0xFFFF3932), // Left side - red from Figma
-                        Color(0xFF4A941C)  // Right side - success green from Figma
+                        Color(0xFFFF3932),
+                        Color(0xFF4A941C)
                     )
                 )
-                // NO BORDER RADIUS as per Figma
             )
             .pointerInput(Unit) {
                 detectDragGestures(
@@ -437,35 +429,27 @@ private fun SwipeableActionArea(
                         if (abs(dragOffset) > swipeThreshold) {
                             if (dragOffset < 0) onDidntShow() else onPickedUp()
                         }
-                        dragOffset = 0f // Reset offset
+                        dragOffset = 0f
                     }
                 ) { _, dragAmount ->
                     dragOffset += dragAmount.x
                 }
             }
     ) {
-        // Action labels with chevrons matching Figma exactly
         Row(
             modifier = Modifier.fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            // Left side: Two big chevrons + "Didn't show"
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(start = 16.dp)
             ) {
-                Text(
-                    text = "‹", 
-                    color = Color.White, 
-                    fontSize = 36.sp, 
-                    fontWeight = FontWeight.Normal
-                )
-                Text(
-                    text = "‹", 
-                    color = Color.White, 
-                    fontSize = 36.sp, 
-                    fontWeight = FontWeight.Normal
+                Icon(
+                    painter = painterResource(id = R.drawable.arrow_left),
+                    contentDescription = "Swipe left",
+                    modifier = Modifier.size(42.dp, 24.dp),
+                    tint = Color.Unspecified
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
@@ -475,7 +459,6 @@ private fun SwipeableActionArea(
                 )
             }
             
-            // Right side: "Picked up" + Two big chevrons
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(end = 16.dp)
@@ -486,22 +469,21 @@ private fun SwipeableActionArea(
                     color = Color.White
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = "›", 
-                    color = Color.White, 
-                    fontSize = 36.sp, 
-                    fontWeight = FontWeight.Normal
+                Icon(
+                    painter = painterResource(id = R.drawable.arrow_right),
+                    contentDescription = "Swipe right",
+                    modifier = Modifier.size(24.dp),
+                    tint = Color.Unspecified
                 )
-                Text(
-                    text = "›", 
-                    color = Color.White, 
-                    fontSize = 36.sp, 
-                    fontWeight = FontWeight.Normal
+                Icon(
+                    painter = painterResource(id = R.drawable.arrow_right),
+                    contentDescription = "Swipe right",
+                    modifier = Modifier.size(24.dp),
+                    tint = Color.Unspecified
                 )
             }
         }
 
-        // NO CENTER THUMB - the Didn't show and Picked up sections handle swipe directly
     }
 }
 
@@ -535,8 +517,7 @@ fun PickupConfirmationBottomSheetPreview() {
             onDidntShow = { },
             onPickedUp = { },
             formattedTime = "04:30",
-            passengerName = "Nneka Chukwu", // Correct name from Figma
-            passengerRating = 4.7f,
+            passengerName = "Nneka Chukwu",             passengerRating = 4.7f,
             pickupLocation = "Ladipo Oluwole Street",
             availableSeats = 1,
             passengersAccepted = listOf("HC", "DS")

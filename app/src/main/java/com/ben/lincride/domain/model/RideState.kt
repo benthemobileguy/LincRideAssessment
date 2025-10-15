@@ -2,10 +2,6 @@ package com.ben.lincride.domain.model
 
 import com.google.android.gms.maps.model.LatLng
 
-/**
- * Ride state management for LincRide
- * Represents the complete state of a ride from start to finish
- */
 data class RideState(
     val currentEvent: RideEvent = RideEvent.IDLE,
     val driver: Driver? = null,
