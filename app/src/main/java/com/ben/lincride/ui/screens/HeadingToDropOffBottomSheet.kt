@@ -309,7 +309,7 @@ private fun RouteStopItem(stop: RouteStop, isLast: Boolean) {
                 }
                 StopType.DROP_OFF_1 -> {
                     // Avatar with green border
-                    stop.passengerInitials?.let { initials ->
+                    stop.passengerInitials?.let { _ ->
                         Box(
                             modifier = Modifier
                                 .size(14.dp)
@@ -328,7 +328,7 @@ private fun RouteStopItem(stop: RouteStop, isLast: Boolean) {
                 }
                 StopType.DROP_OFF_2 -> {
                     // Avatar with orange border
-                    stop.passengerInitials?.let { initials ->
+                    stop.passengerInitials?.let { _ ->
                         Box(
                             modifier = Modifier
                                 .size(14.dp)

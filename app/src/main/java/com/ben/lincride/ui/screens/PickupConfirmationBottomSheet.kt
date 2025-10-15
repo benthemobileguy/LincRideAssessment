@@ -417,7 +417,6 @@ private fun SwipeableActionArea(
     var dragOffset by remember { mutableStateOf(0f) }
     val density = LocalDensity.current
     val swipeThreshold = with(density) { 100.dp.toPx() }
-    val animatedDragOffset by animateFloatAsState(targetValue = dragOffset, animationSpec = spring(), label = "")
 
     Box(
         modifier = modifier

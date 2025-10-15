@@ -1,16 +1,16 @@
-# LincRide
+# LincRide - Senior Android Engineer Assessment
 
-A modern Android ride-sharing application built with Jetpack Compose, featuring real-time ride simulation, interactive maps, and a comprehensive modal system for driver-passenger interactions.
+This project is a technical assessment submission for the Senior Android Engineer position at LINCRIDE. It demonstrates proficiency in modern Android development using Kotlin, Jetpack Compose, and Google Maps SDK through implementation of a ride-sharing UI with event-driven simulation.
 
-## Features
+## Assessment Requirements Implemented
 
-- Interactive Maps Integration - Google Maps with real-time car tracking and route visualization
-- Ride Simulation Engine - Complete ride lifecycle from pickup to drop-off with animated progress
-- Modern Modal System - Consistent bottom sheet modals for all ride states
-- Professional UI/UX - SF Pro Display typography, Material 3 design system
-- Real-time Progress Tracking - Animated progress bars with car movement
-- Multi-passenger Support - Handle multiple passengers with individual avatars and route stops
-- Trip Analytics - Earnings tracking, CO₂ savings calculation, passenger ratings
+- **Figma Design Implementation**: Pixel-perfect replication of provided designs using Jetpack Compose
+- **Google Maps SDK Integration**: Functional map with animated car movement and route visualization
+- **Event-Driven Architecture**: Complete ride simulation flow with 5 distinct events
+- **State Management**: Modern Compose state management with reactive UI updates
+- **Bottom Sheet Modals**: Consistent modal system for all ride states
+- **Animations**: Progress tracking, car movement, and modal transitions
+- **Clean Architecture**: MVVM pattern with proper separation of concerns
 
 ## Architecture
 
@@ -22,14 +22,15 @@ Built using modern Android development practices:
 - Clean Architecture principles with domain/data/presentation layers
 - Kotlin Coroutines for asynchronous operations
 
-## UI States
+## Event Simulation Flow
 
-The app simulates a complete ride-sharing experience with the following modal states:
+The application implements the required 5-event simulation:
 
-1. Get to Pickup - Navigate to passenger location with progress tracking
-2. Pickup Confirmation - Swipeable interface for "Picked up" vs "Didn't show"
-3. Heading to Drop-off - Route visualization with multiple passenger stops
-4. Trip Ended - Earnings summary, passenger rating, and CO₂ impact
+1. **Event 1: App Load** - Display Screen 3.2.1 (Main Map View)
+2. **Event 2: User Clicks "Offer a Ride"** - Show Screen 14.1.1 (Bottom Sheet)
+3. **Event 3: Get to Pick Up** - Car progress animation, transition to Screen 14.2.1
+4. **Event 4: Rider Action** - Swipeable "Didn't Show"/"Picked Up", show Screen 14.4.1
+5. **Event 5: Heading to Destination** - Final car animation, show Screen 14.7.3 (Trip Ended)
 
 ## Getting Started
 
@@ -71,11 +72,17 @@ The app simulates a complete ride-sharing experience with the following modal st
    
    Or open in Android Studio and run the `app` module.
 
-### API Key Security
+## How to Trigger Events
 
-- The `local.properties` file is automatically ignored by git
-- Never commit your API key to version control
-- For production builds, use secure CI/CD environment variables
+The simulation runs automatically when you launch the app:
+
+1. **App Load**: Automatically displays the main map view
+2. **Offer a Ride**: Click the "Offer a Ride" button on the main screen
+3. **Get to Pick Up**: Automatically starts after Event 2 with progress animation
+4. **Rider Action**: Automatically transitions after pickup animation completes
+5. **Heading to Destination**: Final simulation with trip completion
+
+You can also restart the simulation by clicking the "New Trip" button in the Trip Ended overlay.
 
 ## Design System
 
@@ -120,52 +127,46 @@ LincRide/
 └── build-logic/               # Build configuration
 ```
 
-## Development
+## Technical Implementation
 
 ### Key Components
 
-- BottomSheetContainer: Reusable modal wrapper with animations
-- GradientProgressBarWithCar: Animated progress tracking
-- RouteVisualization: Multi-stop route display with passenger avatars
-- PassengerInfoCard: Consistent passenger information layout
+- **BottomSheetContainer**: Reusable modal wrapper with slide-up animations
+- **GradientProgressBarWithCar**: Animated progress tracking with car movement
+- **RouteVisualization**: Multi-stop route display with passenger avatars
+- **RideSimulationEngine**: Event-driven simulation logic
+- **MapScreen**: Google Maps integration with route and marker animations
 
-### Modal System
+### Architecture Decisions
+
+- **MVVM Pattern**: Clear separation between UI and business logic
+- **Event-Driven Design**: Reactive state management using Kotlin Coroutines
+- **Compose State Management**: Leveraging `remember`, `mutableStateOf`, and `LaunchedEffect`
+- **Modular Structure**: Feature-based modules for scalability
+- **Clean Code**: Well-commented, idiomatic Kotlin following Android best practices
+
+### Modal System Design
 All modals follow a consistent pattern:
-- "Smart" composables handle logic and state
-- "Dumb" composables focus on UI display only
-- Reusable components for consistency
-- Material 3 typography for SF Pro Display integration
+- "Smart" composables handle simulation logic and state
+- "Dumb" composables focus purely on UI display
+- Reusable components for consistency across screens
+- Material 3 typography with SF Pro Display integration
 
-## Building for Production
+## Known Limitations
 
-1. Update app version in `app/build.gradle.kts`
-2. Configure signing keys
-3. Set up release API key management
-4. Run: `./gradlew assembleRelease`
+- **Hardcoded Routes**: Map routes are predefined for simulation purposes
+- **Simplified Networking**: No real API integration, uses local simulation
+- **Basic Error Handling**: Limited error scenarios implemented for assessment scope
+- **Single User Flow**: Designed for driver-side experience only
 
-## Contributing
+## Assessment Submission
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+This project demonstrates:
+- **Figma Design Accuracy**: Pixel-perfect implementation of provided designs
+- **Modern Android Development**: Jetpack Compose, Material 3, Clean Architecture
+- **Google Maps Integration**: Functional mapping with animated markers
+- **Event-Driven Simulation**: Complete 5-event ride-sharing flow
+- **Code Quality**: Clean, maintainable, well-documented Kotlin code
+- **Performance Considerations**: Efficient animations and state management
 
-### Code Style
-- Follow Kotlin coding conventions
-- Use meaningful component names
-- Maintain consistent spacing and typography
-- Reuse existing components when possible
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Google Maps Platform for location services
-- Material Design 3 for design system
-- Jetpack Compose for modern Android UI
-- SF Pro Display typography from Apple
-
-Note: This app is for demonstration purposes. Ensure you have proper licensing for any fonts and comply with Google Maps API usage policies.
+Submitted as part of the Senior Android Engineer assessment for LINCRIDE.
