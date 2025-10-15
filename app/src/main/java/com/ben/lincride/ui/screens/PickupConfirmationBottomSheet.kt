@@ -287,10 +287,11 @@ private fun PassengerInfoCard(
                         color = Color(0xFF2A2A2A) // Figma color specification
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = "✓", 
-                        style = MaterialTheme.typography.labelMedium, 
-                        color = LincGreen
+                    Icon(
+                        painter = painterResource(id = R.drawable.verify),
+                        contentDescription = "Verified",
+                        modifier = Modifier.size(14.dp),
+                        tint = Color.Unspecified // Preserve original SVG colors
                     )
                 }
                 Spacer(modifier = Modifier.height(4.dp))
