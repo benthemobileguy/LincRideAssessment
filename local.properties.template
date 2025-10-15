@@ -1,0 +1,8 @@
+# This file contains the mapping of SDK components to their installation paths.
+# Location of the SDK. This is only used by Gradle.
+sdk.dir=/Users/USERNAME/Library/Android/sdk
+
+# Google Maps API Key
+# Replace YOUR_MAPS_API_KEY_HERE with your actual Google Maps API key
+# Get your key from: https://console.cloud.google.com/apis/credentials
+MAPS_API_KEY=YOUR_MAPS_API_KEY_HERE

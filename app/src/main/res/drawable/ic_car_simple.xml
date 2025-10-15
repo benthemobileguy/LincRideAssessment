@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="16dp"
+    android:viewportWidth="32"
+    android:viewportHeight="16">
+    
+    <!-- Car body - simplified white car -->
+    <path
+        android:fillColor="#E8E8E8"
+        android:pathData="M4,6 L28,6 Q30,6 30,8 L30,12 Q30,14 28,14 L26,14 Q24,14 24,12 Q24,10 22,10 L10,10 Q8,10 8,12 Q8,14 6,14 L4,14 Q2,14 2,12 L2,8 Q2,6 4,6 Z" />
+    
+    <!-- Car top -->
+    <path
+        android:fillColor="#F5F5F5"
+        android:pathData="M8,4 L24,4 Q26,4 26,6 L26,8 L6,8 L6,6 Q6,4 8,4 Z" />
+    
+    <!-- Windows -->
+    <path
+        android:fillColor="#B0B0B0"
+        android:pathData="M9,5 L23,5 Q24,5 24,6 L24,7 L8,7 L8,6 Q8,5 9,5 Z" />
+    
+    <!-- Front Wheel -->
+    <path
+        android:fillColor="#404040"
+        android:pathData="M9,10 A2,2 0 1,1 9,14 A2,2 0 1,1 9,10 Z" />
+    
+    <!-- Rear Wheel -->
+    <path
+        android:fillColor="#404040"
+        android:pathData="M23,10 A2,2 0 1,1 23,14 A2,2 0 1,1 23,10 Z" />
+</vector>
